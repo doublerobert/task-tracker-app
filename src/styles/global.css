@@ -1,4 +1,9 @@
+@import "@fontsource/inter";
+@import "@fontsource/plus-jakarta-sans";
+
 :root {
+  --font-sans: "Inter Variable", system-ui, -apple-system, sans-serif;
+  --font-heading: "Plus Jakarta Sans Variable", "Inter Variable", system-ui, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -9,10 +14,12 @@
 
 body {
   margin: 0;
+  font-family: var(--font-sans);
 }
 
 h1,
 h2 {
+  font-family: var(--font-heading);
 }
 
 h1 {
