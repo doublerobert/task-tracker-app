@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "dotenvx run -- vite",
-    "build": "tsc && dotenvx run -- vite build",
-    "preview": "dotenvx run -- vite preview"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

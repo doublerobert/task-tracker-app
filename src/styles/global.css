@@ -1,0 +1,28 @@
+:root {
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+  }
+
+}
+
+body {
+  margin: 0;
+}
+
+h1,
+h2 {
+}
+
+h1 {
+  @media (max-width: 1024px) {
+  }
+}
+h2 {
+  @media (max-width: 1024px) {
+  }
+}
+p {
+  margin: 0;
+}

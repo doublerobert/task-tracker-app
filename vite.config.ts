@@ -8,11 +8,11 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        main: resolve(__dirname, "index.html"),
-        login: resolve(__dirname, "login.html"),
-        dashboard: resolve(__dirname, "dashboard.html"),
-        admin: resolve(__dirname, "admin.html"),
-        taskDetail: resolve(__dirname, "task-detail.html"),
+        main: resolve(import.meta.dirname, "index.html"),
+        login: resolve(import.meta.dirname, "login.html"),
+        dashboard: resolve(import.meta.dirname, "dashboard.html"),
+        admin: resolve(import.meta.dirname, "admin.html"),
+        taskDetail: resolve(import.meta.dirname, "task-detail.html"),
       },
     },
   },
