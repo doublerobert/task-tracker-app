@@ -8,14 +8,10 @@
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "firebase"
-    ]
-  },
   "devDependencies": {
     "@dotenvx/dotenvx": "^2.28.0",
     "@types/node": "^26.6.1",
+    "firebase-tools": "^15.30.2",
     "typescript": "~6.0.2",
     "vite": "^8.3.0"
   },
