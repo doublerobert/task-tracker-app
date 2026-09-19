@@ -1,10 +1,6 @@
-allowBuilds:
-  '@firebase/util': true
-  '@parcel/watcher': true
-  esbuild: true
-  protobufjs: true
-  re2: true
-  unrs-resolver: true
 packages:
-  - '.'
-  - 'functions'
+  - 'web'
+  - 'server'
+allowBuilds:
+  bcrypt: set this to true or false
+  esbuild: set this to true or false
