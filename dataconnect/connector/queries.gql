@@ -1,0 +1,71 @@
+query GetMyTasks($userId: String!) @auth(level: USER) {
+  tasks(where: { assignedTo: { id: { eq: $userId } } }, orderBy: { dueDate: ASC }) {
+    id
+    title
+    description
+    status
+    priority
+    dueDate
+    createdBy {
+      id
+      displayName
+    }
+  }
+}
+
+query GetAllTasks @auth(level: USER) {
+  tasks(orderBy: { dueDate: ASC }) {
+    id
+    title
+    status
+    priority
+    dueDate
+    assignedTo {
+      id
+      displayName
+      email
+    }
+    createdBy {
+      id
+      displayName
+    }
+  }
+}
+
+query GetTaskById($id: UUID!) @auth(level: USER) {
+  task(id: $id) {
+    id
+    title
+    description
+    status
+    priority
+    dueDate
+    assignedTo {
+      id
+      displayName
+      email
+    }
+    createdBy {
+      id
+      displayName
+    }
+  }
+}
+
+query GetAllUsers @auth(level: USER) {
+  users {
+    id
+    displayName
+    email
+    role
+  }
+}
+
+query GetCurrentUserProfile @auth(level: USER) {
+  user(key: { id_expr: "auth.uid" }) {
+    id
+    displayName
+    email
+    role
+  }
+}

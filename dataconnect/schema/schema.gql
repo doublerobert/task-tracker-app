@@ -1,0 +1,21 @@
+type Role = "admin" | "member";
+type Status = "todo" | "in-progress" | "done"
+type Priority = "low" | "medium" | "high"
+
+type User @table {
+  email: String!
+  displayName: String!
+  role: Role! # "admin" | "member"
+  createdAt: Timestamp!
+}
+
+type Task @table {
+  title: String!
+  description: String
+  status: Status! # "todo" | "in-progress" | "done"
+  priority: Priority! # "low" | "medium" | "high"
+  dueDate: Date
+  assignedTo: User!
+  createdBy: User!
+  createdAt: Timestamp!
+}

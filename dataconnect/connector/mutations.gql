@@ -1,0 +1,65 @@
+mutation CreateUserProfile($displayName: String!, $email: String!)
+@auth(level: USER) {
+    user_insert(
+        data: {
+            id_expr: "auth.uid"
+            displayName: $displayName
+            email: $email
+            role: "member"
+            createdAt_expr: "request.time"
+        }
+    )
+}
+
+mutation CreateTask(
+    $title: String!
+    $description: String
+    $priority: String!
+    $dueDate: Date
+    $assignedToId: String!
+) @auth(level: USER) {
+    task_insert(
+        data: {
+            title: $title
+            description: $description
+            status: "todo"
+            priority: $priority
+            dueDate: $dueDate
+            assignedTo_expr: $assignedToId
+            createdBy_expr: "auth.uid"
+            createdAt_expr: "request.time"
+        }
+    )
+}
+
+mutation UpdateTaskStatus($id: UUID!, $status: String!) @auth(level: USER) {
+    task_update(id: $id, data: { status: $status })
+}
+
+mutation UpdateTask(
+    $id: UUID!
+    $title: String
+    $description: String
+    $priority: String
+    $dueDate: Date
+    $assignedToId: String
+) @auth(level: USER) {
+    task_update(
+        id: $id
+        data: {
+            title: $title
+            description: $description
+            priority: $priority
+            dueDate: $dueDate
+            assignedTo_expr: $assignedToId
+        }
+    )
+}
+
+mutation DeleteTask($id: UUID!) @auth(level: USER) {
+    task_delete(id: $id)
+}
+
+mutation UpdateUserRole($id: String!, $role: String!) @auth(level: USER) {
+    user_update(id: $id, data: { role: $role })
+}

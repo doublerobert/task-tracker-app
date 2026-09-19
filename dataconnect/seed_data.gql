@@ -1,0 +1,11 @@
+mutation SeedAdmin {
+    user_insert(
+        data: {
+            id: "REPLACE_WITH_YOUR_FIREBASE_AUTH_UID"
+            displayName: "Admin User"
+            email: "doublerobert001@gmail.com"
+            role: "admin"
+            createdAt_expr: "request.time"
+        }
+    )
+}
