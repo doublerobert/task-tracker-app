@@ -1,9 +1,10 @@
 allowBuilds:
   '@firebase/util': true
+  '@parcel/watcher': true
+  esbuild: true
   protobufjs: true
   re2: true
-onlyBuiltDependencies:
-  - firebase
+  unrs-resolver: true
 packages:
   - '.'
   - 'functions'
