@@ -23,25 +23,46 @@ export const tasksRepository = {
 
   async listForUser(userId: string, organizationId: string, isAdmin: boolean) {
     if (isAdmin) {
-      return database.select().from(tasks).where(eq(tasks.organizationId, organizationId));
+      return database
+        .select()
+        .from(tasks)
+        .where(eq(tasks.organizationId, organizationId));
     }
-    return database.select().from(tasks).where(
-      and(
-        eq(tasks.organizationId, organizationId),
-        or(eq(tasks.assignedTo, userId), eq(tasks.createdBy, userId))
-      )
-    );
+    return database
+      .select()
+      .from(tasks)
+      .where(
+        and(
+          eq(tasks.organizationId, organizationId),
+          or(eq(tasks.assignedTo, userId), eq(tasks.createdBy, userId)),
+        ),
+      );
   },
 
   async updateStatus(id: string, status: "todo" | "in-progress" | "done") {
-    const [task] = await database.update(tasks).set({ status }).where(eq(tasks.id, id)).returning();
+    const [task] = await database
+      .update(tasks)
+      .set({ status })
+      .where(eq(tasks.id, id))
+      .returning();
     return task;
   },
 
-  async update(id: string, data: Partial<{
-    title: string; description: string; priority: string; dueDate: string; assignedTo: string;
-  }>) {
-    const [task] = await database.update(tasks).set(data).where(eq(tasks.id, id)).returning();
+  async update(
+    id: string,
+    data: Partial<{
+      title: string;
+      description: string;
+      priority: string;
+      dueDate: string;
+      assignedTo: string;
+    }>,
+  ) {
+    const [task] = await database
+      .update(tasks)
+      .set(data)
+      .where(eq(tasks.id, id))
+      .returning();
     return task;
   },
 
