@@ -1,4 +1,4 @@
-import { RequestHandler } from "express";
+import type { RequestHandler } from "express";
 import createHttpError from "http-errors";
 import { z } from "zod";
 import { formatZodErrors } from "../utils/format-zod-errors.js";
@@ -75,7 +75,7 @@ export function validate<
         });
       } else {
         if (location === "body") {
-          req.body = result.data;
+          req.body = result.data as typeof req.body;
         } else if (location === "query") {
           req.query = result.data as typeof req.query;
         } else if (location === "params") {

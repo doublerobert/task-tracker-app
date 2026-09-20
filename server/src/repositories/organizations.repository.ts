@@ -1,9 +1,11 @@
 import { database } from "../configs/drizzle";
 import { organizations } from "../database/schema";
+import type { Organization } from "../database/schema";
 import { eq } from "drizzle-orm";
 
+
 export const organizationsRepository = {
-  async create(name: string) {
+  async create(name: string): Promise<Organization> {
     const [org] = await database
       .insert(organizations)
       .values({ name })
@@ -11,7 +13,7 @@ export const organizationsRepository = {
     return org;
   },
 
-  async findById(id: string) {
+  async findById(id: string): Promise<Organization | undefined> {
     const [org] = await database
       .select()
       .from(organizations)

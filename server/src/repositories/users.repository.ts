@@ -4,12 +4,12 @@ import type { NewUser, User } from "../database/schema";
 import { eq, and } from "drizzle-orm";
 
 export const usersRepository = {
-  async create(data: User) {
+  async create(data: NewUser): Promise<User> {
     const [user] = await database.insert(users).values(data).returning();
     return user;
   },
 
-  async findByEmail(email: string) {
+  async findByEmail(email: string): Promise<User | undefined> {
     const [user] = await database
       .select()
       .from(users)
@@ -17,22 +17,19 @@ export const usersRepository = {
     return user;
   },
 
-  async findById(id: string) {
+  async findById(id: string): Promise<User | undefined> {
     const [user] = await database.select().from(users).where(eq(users.id, id));
     return user;
   },
 
-  async listByOrganization(organizationId: string) {
+  async listByOrganization(organizationId: string): Promise<User[]> {
     return database
       .select()
       .from(users)
       .where(eq(users.organizationId, organizationId));
   },
 
-  async update(
-    id: string,
-    data: NewUser,
-  ) {
+  async update(id: string, data: NewUser): Promise<User> {
     const [user] = await database
       .update(users)
       .set(data)

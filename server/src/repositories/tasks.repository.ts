@@ -4,17 +4,21 @@ import type { NewTask, Task, TaskStatus } from "../database/schema";
 import { eq, or, and } from "drizzle-orm";
 
 export const tasksRepository = {
-  async create(data: Task) {
+  async create(data: NewTask): Promise<Task> {
     const [task] = await database.insert(tasks).values(data).returning();
     return task;
   },
 
-  async findById(id: string) {
+  async findById(id: string): Promise<Task | undefined> {
     const [task] = await database.select().from(tasks).where(eq(tasks.id, id));
     return task;
   },
 
-  async listForUser(userId: string, organizationId: string, isAdmin: boolean) {
+  async listForUser(
+    userId: string,
+    organizationId: string,
+    isAdmin: boolean,
+  ): Promise<Task[]> {
     if (isAdmin) {
       return database
         .select()
@@ -32,7 +36,10 @@ export const tasksRepository = {
       );
   },
 
-  async updateStatus(id: string, status: TaskStatus) {
+  async updateStatus(
+    id: string,
+    status: TaskStatus,
+  ): Promise<Task | undefined> {
     const [task] = await database
       .update(tasks)
       .set({ status })
@@ -41,10 +48,7 @@ export const tasksRepository = {
     return task;
   },
 
-  async update(
-    id: string,
-    data: NewTask
-  ) {
+  async update(id: string, data: NewTask): Promise<Task | undefined> {
     const [task] = await database
       .update(tasks)
       .set(data)

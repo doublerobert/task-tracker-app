@@ -4,12 +4,15 @@ import { requestLogger } from "./middlewares/request-logger.middleware";
 import { errorHandler } from "./middlewares/error.middleware";
 import { notFoundHandler } from "./middlewares/notfound.middleware";
 import { corsMiddleware } from "./configs/cors";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
+app.set("trust proxy", 1);
+
+app.use(cookieParser());
 app.use(corsMiddleware);
 app.use(express.json());
-app.set("trust proxy", 1);
 app.use(requestLogger);
 
 app.get("/", (_req, res) => {
