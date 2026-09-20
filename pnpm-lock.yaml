@@ -10,6 +10,12 @@ importers:
 
   server:
     dependencies:
+      '@dotenvx/dotenvx':
+        specifier: ^2.28.0
+        version: 2.28.0
+      '@t3-oss/env-core':
+        specifier: ^0.13.11
+        version: 0.13.11(typescript@7.0.2)(zod@4.6.5)
       bcrypt:
         specifier: ^6.0.0
         version: 6.0.0
@@ -53,9 +59,6 @@ importers:
       '@types/node':
         specifier: ^26.6.1
         version: 26.6.1
-      '@types/pino':
-        specifier: ^7.0.5
-        version: 7.0.5
       drizzle-kit:
         specifier: ^1.0.0-rc.4
         version: 1.0.0-rc.5-ab785fc
@@ -71,6 +74,9 @@ importers:
 
   web:
     dependencies:
+      '@dotenvx/dotenvx':
+        specifier: ^2.28.0
+        version: 2.28.0
       '@fontsource/inter':
         specifier: ^5.3.0
         version: 5.3.0
@@ -87,9 +93,6 @@ importers:
         specifier: ^4.6.5
         version: 4.6.5
     devDependencies:
-      '@dotenvx/dotenvx':
-        specifier: ^2.28.0
-        version: 2.28.0
       '@types/node':
         specifier: ^26.6.1
         version: 26.6.1
@@ -592,10 +595,6 @@ packages:
 
   '@types/node@26.6.1':
     resolution: {integrity: sha512-VqGJBMCtdhqkBUCcBLvywI0NJ+KLuVzgNnlBUNFOQjqVxzo2lxLUNg1DSey8+u2u6ktswSAxg+s68QLzWHNOuA==}
-
-  '@types/pino@7.0.5':
-    resolution: {integrity: sha512-wKoab31pknvILkxAF8ss+v9iNyhw5Iu/0jLtRkUD74cNfOOLJNnqfFKAv0r7wVaTQxRZtWrMpGfShwwBjOcgcg==}
-    deprecated: This is a stub types definition. pino provides its own type definitions, so you do not need this installed.
 
   '@types/qs@6.15.1':
     resolution: {integrity: sha512-GZHUBZR9hckSUhrxmp1nG6NwdpM9fCunJwyThLW1X3AyHgd9IlHb6VANpQQqDr2o/qQp6McZ3y/IA2rVzKzSbw==}
@@ -1957,6 +1956,11 @@ snapshots:
       typescript: 6.0.3
       zod: 4.6.5
 
+  '@t3-oss/env-core@0.13.11(typescript@7.0.2)(zod@4.6.5)':
+    optionalDependencies:
+      typescript: 7.0.2
+      zod: 4.6.5
+
   '@types/bcrypt@6.0.0':
     dependencies:
       '@types/node': 26.6.1
@@ -1995,10 +1999,6 @@ snapshots:
   '@types/node@26.6.1':
     dependencies:
       undici-types: 8.9.0
-
-  '@types/pino@7.0.5':
-    dependencies:
-      pino: 10.3.1
 
   '@types/qs@6.15.1': {}
 
