@@ -1,14 +1,14 @@
-import { db } from "../database";
+import { database } from "../configs/drizzle";
 import { refreshTokens } from "../database/schema";
 import { eq, and } from "drizzle-orm";
 
 export const refreshTokensRepository = {
   async storeRefreshToken(jti: string, userId: string, expiresAt: Date) {
-    return db.insert(refreshTokens).values({ jti, userId, expiresAt });
+    return database.insert(refreshTokens).values({ jti, userId, expiresAt });
   },
 
   async findValidRefreshToken(jti: string) {
-    const [row] = await db
+    const [row] = await database
       .select()
       .from(refreshTokens)
       .where(and(eq(refreshTokens.jti, jti), eq(refreshTokens.revoked, false)));
@@ -16,14 +16,14 @@ export const refreshTokensRepository = {
   },
 
   async revokeRefreshToken(jti: string) {
-    return db
+    return database
       .update(refreshTokens)
       .set({ revoked: true })
       .where(eq(refreshTokens.jti, jti));
   },
 
   async revokeAllForUser(userId: string) {
-    return db
+    return database
       .update(refreshTokens)
       .set({ revoked: true })
       .where(eq(refreshTokens.userId, userId));

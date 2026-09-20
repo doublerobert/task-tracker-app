@@ -1,15 +1,10 @@
 import { database } from "../configs/drizzle";
 import { users } from "../database/schema";
+import type { NewUser, User } from "../database/schema";
 import { eq, and } from "drizzle-orm";
 
 export const usersRepository = {
-  async create(data: {
-    organizationId: string;
-    email: string;
-    password: string;
-    displayName: string;
-    role: "admin" | "member";
-  }) {
+  async create(data: User) {
     const [user] = await database.insert(users).values(data).returning();
     return user;
   },
@@ -36,7 +31,7 @@ export const usersRepository = {
 
   async update(
     id: string,
-    data: Partial<{ displayName: string; role: "admin" | "member" }>,
+    data: NewUser,
   ) {
     const [user] = await database
       .update(users)

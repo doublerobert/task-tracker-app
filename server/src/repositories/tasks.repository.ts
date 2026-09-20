@@ -1,17 +1,10 @@
 import { database } from "../configs/drizzle";
 import { tasks } from "../database/schema";
+import type { NewTask, Task, TaskStatus } from "../database/schema";
 import { eq, or, and } from "drizzle-orm";
 
 export const tasksRepository = {
-  async create(data: {
-    organizationId: string;
-    title: string;
-    description?: string;
-    priority: "low" | "medium" | "high";
-    dueDate?: string;
-    assignedTo: string;
-    createdBy: string;
-  }) {
+  async create(data: Task) {
     const [task] = await database.insert(tasks).values(data).returning();
     return task;
   },
@@ -39,7 +32,7 @@ export const tasksRepository = {
       );
   },
 
-  async updateStatus(id: string, status: "todo" | "in-progress" | "done") {
+  async updateStatus(id: string, status: TaskStatus) {
     const [task] = await database
       .update(tasks)
       .set({ status })
@@ -50,13 +43,7 @@ export const tasksRepository = {
 
   async update(
     id: string,
-    data: Partial<{
-      title: string;
-      description: string;
-      priority: string;
-      dueDate: string;
-      assignedTo: string;
-    }>,
+    data: NewTask
   ) {
     const [task] = await database
       .update(tasks)
