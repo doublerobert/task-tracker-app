@@ -81,8 +81,8 @@ export const relations = defineRelations(
         from: r.users.organizationId,
         to: r.organizations.id,
       }),
-      assignedTasks: r.many.tasks(),
-      createdTasks: r.many.tasks(),
+      assignedTasks: r.many.tasks({ alias: "assignedTasks" }),
+      createdTasks: r.many.tasks({ alias: "createdTasks" }),
       refreshTokens: r.many.refreshTokens(),
     },
     tasks: {
@@ -90,13 +90,15 @@ export const relations = defineRelations(
         from: r.tasks.organizationId,
         to: r.organizations.id,
       }),
-      assignedTo: r.one.users({
+      assignee: r.one.users({
         from: r.tasks.assignedTo,
         to: r.users.id,
+        alias: "assignedTasks",
       }),
-      createdBy: r.one.users({
+      creator: r.one.users({
         from: r.tasks.createdBy,
         to: r.users.id,
+        alias: "createdTasks",
       }),
     },
     refreshTokens: {

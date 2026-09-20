@@ -1,12 +1,12 @@
 import { z } from "zod";
 
-export const adminSignupSchema = z.object({
+export const registerSchema = z.object({
   email: z.email("Please provide a valid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
   displayName: z.string().min(1, "Name is required"),
   orgName: z.string().min(1, "Organization name is required"),
 });
-export type AdminSignupBody = z.infer<typeof adminSignupSchema>;
+export type RegisterBody = z.infer<typeof registerSchema>;
 
 export const loginSchema = z.object({
   email: z.email("Please provide a valid email address"),
