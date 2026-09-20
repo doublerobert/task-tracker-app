@@ -43,11 +43,12 @@
     "baseUrl": ".",
     "lib": ["ES2022"],
     "moduleResolution": "Bundler",
-    "typeRoots": ["node_modules/@types", "@types"],
+    "typeRoots": ["node_modules/@types"],
     "esModuleInterop": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
   },
+    "include": ["src/**/*"],
 }

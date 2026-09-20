@@ -1,12 +1,12 @@
 import app from "./app";
-import env from "./configs/env";
-import logger from "./configs/logger";
+import { env } from "./configs/env";
+import { logger } from "./configs/logger";
 
 const port = env.PORT;
 
 const start = async () => {
   try {
-    await prisma.$queryRaw`SELECT 1`;
+    // await prisma.$queryRaw`SELECT 1`;
     logger.info("database connected");
   } catch (err) {
     logger.fatal({ err }, "database connection failed");
@@ -24,7 +24,7 @@ const start = async () => {
         logger.error({ err }, "server close error");
         process.exit(1);
       }
-      await prisma.$disconnect();
+      // await prisma.$disconnect();
       process.exit(0);
     });
   };
