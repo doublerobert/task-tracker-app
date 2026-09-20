@@ -1,12 +1,14 @@
 import app from "./app";
 import { env } from "./configs/env";
 import { logger } from "./configs/logger";
+import { database } from "./configs/drizzle";
 
 const port = env.PORT;
 
 const start = async () => {
   try {
     // await prisma.$queryRaw`SELECT 1`;
+    await database.execute("select 1");
     logger.info("database connected");
   } catch (err) {
     logger.fatal({ err }, "database connection failed");

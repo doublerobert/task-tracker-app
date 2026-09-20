@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { randomUUID } from "crypto";
-import { env } from "../config/env";
+import { env } from "../configs/env";
 
 export function signAccessToken(payload: { userId: string; orgId: string; role: string }) {
   return jwt.sign(payload, env.JWT_ACCESS_SECRET, { expiresIn: "15m" });
