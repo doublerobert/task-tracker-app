@@ -6,7 +6,7 @@ import {
   signRefreshToken,
   verifyRefreshToken,
 } from "../lib/jwt";
-import { Unauthorized } from "http-errors";
+import { Unauthorized } from "../lib/app-errors";
 import { comparePassword, hashPassword } from "src/lib/passwords";
 
 export const authService = {

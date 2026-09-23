@@ -1,0 +1,25 @@
+info:
+  name: register-admin
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:300/api/auth/register
+  body:
+    type: json
+    data: |-
+      {
+        "email": "doublerobert001@gmail.com",
+        "password": "123456789",
+        "displayName": "Robert Robert",
+        "orgName": "ROBO-ONE"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

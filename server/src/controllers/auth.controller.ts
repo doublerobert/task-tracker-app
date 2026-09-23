@@ -1,65 +1,51 @@
-import type { Request, Response } from "express";
+import type { Request } from "express";
 import { authService } from "../services/auth.service";
-import { success } from "src/utils/api-response";
+import { success } from "../utils/api-response";
+import type { LoginBody, RegisterBody } from "../schemas/auth.schema";
+import { Unauthorized } from "../lib/app-errors";
+import { asyncHandler } from "../utils/async-handler";
+import { setRefreshTokenCookie } from "../utils/cookies";
 
 export const authController = {
-  async register(req: Request, res: Response) {
-    const { email, password, displayName, orgName } = req.body;
+  register: asyncHandler(
+    async (req: Request<unknown, unknown, RegisterBody>, res) => {
+      const { email, password, displayName, orgName } = req.body;
+      const { accessToken, refreshToken } = await authService.register(
+        email,
+        password,
+        displayName,
+        orgName,
+      );
+      setRefreshTokenCookie(res, refreshToken);
+      res.status(201).json(success({ accessToken }));
+    },
+  ),
 
-    const { accessToken, refreshToken } = await authService.register(
-      email,
-      password,
-      displayName,
-      orgName,
-    );
+  login: asyncHandler(
+    async (req: Request<unknown, unknown, LoginBody>, res) => {
+      const { email, password } = req.body;
+      const { accessToken, refreshToken } = await authService.login(
+        email,
+        password,
+      );
+      setRefreshTokenCookie(res, refreshToken);
+      res.json(success({ accessToken }));
+    },
+  ),
 
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-    });
-    res.status(201).json(success({ accessToken }));
-  },
-
-  async login(req: Request, res: Response) {
-    const { email, password } = req.body;
-
-    const { accessToken, refreshToken } = await authService.login(
-      email,
-      password,
-    );
-
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-    });
-    res.json(success({ accessToken }));
-  },
-
-  async refresh(req: Request, res: Response) {
+  refresh: asyncHandler(async (req, res) => {
     const { refreshToken } = req.cookies;
-    if (!refreshToken) {
-      return res.status(401).json({ error: "No refresh token" });
-    }
-
+    if (!refreshToken) throw new Unauthorized("No refresh token");
     const { accessToken, refreshToken: newRefreshToken } =
       await authService.refresh(refreshToken);
-
-    res.cookie("refreshToken", newRefreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-    });
+    setRefreshTokenCookie(res, newRefreshToken);
     res.json(success({ accessToken }));
-  },
+  }),
 
-  async logout(req: Request, res: Response) {
+  logout: asyncHandler(async (req, res) => {
     const { refreshToken } = req.cookies;
-    if (refreshToken) {
-      await authService.logout(refreshToken);
-    }
+    if (refreshToken) await authService.logout(refreshToken);
     res.clearCookie("refreshToken");
     res.status(204).send();
-  },
+  }),
 };
